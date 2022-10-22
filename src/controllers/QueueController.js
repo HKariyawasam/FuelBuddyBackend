@@ -98,7 +98,7 @@ const getLatestQueueLength = async (req, res) => {
     })
 
     try {
-        return res.status(200).send({ data: queuelength });
+        return res.json({queuelength});
     } catch (error) {
         return res.status(500).send({ message: 'Internal server error' });
     }

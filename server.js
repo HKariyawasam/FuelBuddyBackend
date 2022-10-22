@@ -11,7 +11,12 @@ const port = process.env.PORT || 4000;
 const URL = process.env.URL;
 
 app.use(express.urlencoded({ extended: false }))
-app.use(cors());
+app.use(cors({ // enables CORS 
+    credentials: true, 
+    origin: true, 
+    methods: ['GET','POST','PUT','DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization'] 
+  }));
 app.use(express.json());
 
 mongoose.connect(URL, {

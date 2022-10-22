@@ -57,7 +57,7 @@ const login = async (req, res) => {
             if (user && bcrypt.compareSync(password, user.password)) {
                 const token = auth.generateAccessToken(email);
                 // call toJSON method applied during model instantiation
-                return res.status(200).send({ ...user.toJSON(), token });
+                return res.status(200).send({data: {...user.toJSON(), token}} );
             }
             else {
                 return res.status(400).send({ message: 'Incorrect Credentials' })
@@ -78,7 +78,7 @@ const getAllUsers = async (req, res) => {
         let users = await User.find();
         if (users) {
             // return res.json(users)
-            return res.status(400).send({ data: users })
+            return res.status(200).send(users)
         } else {
             return res.status(404).send({ message: 'No users available' });
         }

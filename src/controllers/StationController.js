@@ -54,7 +54,7 @@ const viewOneStation = async (req, res) => {
 const viewAllStations = async (req, res) => {
     try {
         const response = await Station.find();
-        return res.status(200).send({ data: response });
+        return res.status(200).send({data: response});
     } catch (error) {
         return res.status(500).send({ message: 'Internal server error' });
     }
@@ -132,7 +132,7 @@ const viewFuelInOneStation = async (req, res) => {
     try {
         let response = await Station.findOne({ id: id });
         if (response) {
-            return res.status(200).send({ data: response.fuel });
+            return res.status(200).send(response.fuel);
         } else {
             return res.status(404).send({ message: 'Not Found' });
         }
@@ -147,7 +147,7 @@ const searchStations = async (req, res) =>{
     let val =req.params.name;
 
      Station.find({name :{$regex: ".*" + val + ".*", $options:'i'}}).then((stations) =>{
-        return res.status(200).send({ data:stations });
+        return res.status(200).send(stations);
  
      }).catch((err)=>{
          console.log(err);
