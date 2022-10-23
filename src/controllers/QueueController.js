@@ -81,7 +81,7 @@ const updateQueueDetails = async (req, res) => {
             try {
                 const response = await Queue.findOneAndUpdate({ stationId: stationId, vehicleId:vehicleId }, updatejoinedDetails);
                 if (response) {
-                    return res.status(200).send({ message: 'Details Updated' });
+                    return res.json({ message: 'Details Updated' });
                 } else {
                     return res.status(500).send({ message: 'Internal server error' });
                 }
