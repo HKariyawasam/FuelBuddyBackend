@@ -57,7 +57,7 @@ const login = async (req, res) => {
             if (user && bcrypt.compareSync(password, user.password)) {
                 const token = auth.generateAccessToken(email);
                 // call toJSON method applied during model instantiation
-                return res.status(200).send({data: {...user.toJSON(), token}} );
+                return res.json({...user.toJSON(), token});
             }
             else {
                 return res.status(400).send({ message: 'Incorrect Credentials' })

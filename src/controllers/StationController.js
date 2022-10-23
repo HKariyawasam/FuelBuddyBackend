@@ -132,7 +132,8 @@ const viewFuelInOneStation = async (req, res) => {
     try {
         let response = await Station.findOne({ id: id });
         if (response) {
-            return res.status(200).send(response.fuel);
+            let data = response.fuel
+            return res.json({data});
         } else {
             return res.status(404).send({ message: 'Not Found' });
         }

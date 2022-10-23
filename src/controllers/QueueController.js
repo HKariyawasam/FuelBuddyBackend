@@ -19,25 +19,38 @@ const joinQueue = async (req, res) => {
         status,
     })
 
-    const joinedStation = checkJoinedQueue(vehicleId);
-    
-    if(joinedStation){
 
-        return res.status(400).send({ message: 'Vehicle is already in a queue' });
-
-    }else{
-        try {
+    try {
+        const joinedQueue = await Queue.findOne({vehicleId:vehicleId})
+        if(joinedQueue){
+            if(joinedQueue.status == "Joined to the queue" ){
+                return res.json({ data: joinedQueue.stationId });
+            }else{
+                return res.json({ data: "Haven't joined to a queue yet" });
+            }
+           
+        }else{
+            try {
             let response = await queueJoin.save();
             if (response) {
-                return res.status(201).send({ message: 'Joined the Queue' });
+                return res.json({ data: 'Joined the Queue' });
             } else {
-                return res.status(500).send({ message: 'Internal server error' });
+                return res.status(500).send({ data: 'Internal server error' });
             }
         } catch (err) {
             console.log(err);
-            return res.status(400).send({ message: 'Error !!' })
+            return res.status(400).send({ data: 'Error !!' })
         }
+            
+        }
+    } catch (error) {
+        return res.status(500).send({ data: 'Internal server error' });
     }
+
+    
+   
+        
+    
 
     
 
@@ -98,7 +111,7 @@ const getLatestQueueLength = async (req, res) => {
     })
 
     try {
-        return res.json({queuelength});
+        return res.json({data:queuelength});
     } catch (error) {
         return res.status(500).send({ message: 'Internal server error' });
     }
@@ -124,7 +137,7 @@ const getLatestQueueLengthByVehicleType = async (req, res) => {
     })
 
     try {
-        return res.status(200).send({ data: queuelength });
+        return res.json({ data: queuelength });
     } catch (error) {
         return res.status(500).send({ message: 'Internal server error' });
     }
@@ -158,7 +171,7 @@ const queueWaitingTime = async (req, res) => {
     }
 
     try {
-        return res.status(200).send({ data: wait });
+        return res.json({ data: wait });
     } catch (error) {
         return res.status(500).send({ message: 'Internal server error' });
     }
@@ -172,7 +185,7 @@ const checkJoinedQueue = async (req, res) => {
         const joinedQueue = await Queue.findOne({vehicleId:vehicleId})
         if(joinedQueue){
             if(joinedQueue.status == "Joined to the queue" ){
-                return res.status(200).send({ data: joinedQueue.stationId });
+                return res.json({ data: joinedQueue.stationId });
             }else{
                 return res.status(200).send({ data: "Haven't joined to a queue yet" });
             }
