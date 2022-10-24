@@ -64,9 +64,16 @@ const viewAllStations = async (req, res) => {
 const updateFuelDetails = async (req, res) =>{
     const id = req.params.id;
     const fuelType = req.params.fuelType;
+    let completeTime;
 
     const arrivalTime  = moment(req.body.arrival).format("YYYY-MM-DD HH:mm");
-    const completeTime = moment(req.body.complete).format("YYYY-MM-DD HH:mm");
+   
+    if(req.body.complete == " " || null){
+        completeTime = " "
+    }else {
+        completeTime = moment(req.body.complete).format("YYYY-MM-DD HH:mm")
+    }
+   
     const status = req.body.status;
 
     console.log(req.body.arrival, completeTime)
@@ -94,7 +101,13 @@ const updateFuelDetails = async (req, res) =>{
             }
         
             fuelArray.push(fuelDetails)
+            fuelArray.sort(function(a, b) {
+                var textA = a.type.toUpperCase();
+                var textB = b.type.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
 
+            
             const StationUpdated = {
                 id:station.id,
                 name:station.name,
@@ -107,7 +120,7 @@ const updateFuelDetails = async (req, res) =>{
             try {
                 const response = await Station.findOneAndUpdate({ id: id }, StationUpdated);
                 if (response) {
-                    return res.status(200).send({ message: 'Updated' });
+                    return res.json({ message: 'Updated' });
                 } else {
                     return res.status(500).send({ message: 'Internal server error' });
                 }

@@ -190,7 +190,25 @@ const getOwnerStations = async (req, res) => {
         let user = await User.findOne({email});
         if (user) {
             // return res.json(user.station)
-            return res.status(400).send({ data: user.station })
+            return res.json({ data: user.station })
+        } else {
+            return res.status(404).send({ message: 'No users available' });
+        }
+    } catch (err) {
+        return res.status(500).send({ message: 'Internal server error' })
+    }
+}
+
+//view one user
+const getUserProfile = async (req, res) => {
+
+    const email = req.params.email;
+
+    try {
+        let user = await User.findOne({email});
+        if (user) {
+        
+            return res.json({ data: user })
         } else {
             return res.status(404).send({ message: 'No users available' });
         }
@@ -208,5 +226,6 @@ module.exports = {
     updateUserPassword,
     updateUser,
     deleteUser,
-    getOwnerStations
+    getOwnerStations,
+    getUserProfile
 };
