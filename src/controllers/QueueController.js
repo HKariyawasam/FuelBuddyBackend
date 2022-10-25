@@ -26,7 +26,28 @@ const joinQueue = async (req, res) => {
             if(joinedQueue.status == "Joined to the queue" ){
                 return res.json({ data: joinedQueue.stationId });
             }else{
-                return res.json({ data: "Haven't joined to a queue yet" });
+                // return res.json({ data: "Haven't joined to a queue yet" });
+                const updatejoinedDetails = {
+                    stationId:stationId,
+                    vehicleId:vehicleId,
+                    vehicleType:vehicleType,
+                    joined:joined,
+                    exit:" ",
+                    status:status
+                
+                }
+                    try {
+                        const response = await Queue.findOneAndUpdate({ stationId: stationId, vehicleId:vehicleId }, updatejoinedDetails);
+                        if (response) {
+                            return res.json({ data: 'Details Updated' });
+                        } else {
+                            return res.status(500).send({ data: 'Internal server error' });
+                        }
+        
+                    } catch (err) {
+                        return res.status(400).send({ data: 'Update Failed' })
+                    }
+                
             }
            
         }else{
@@ -46,14 +67,6 @@ const joinQueue = async (req, res) => {
     } catch (error) {
         return res.status(500).send({ data: 'Internal server error' });
     }
-
-    
-   
-        
-    
-
-    
-
 }
 
 //update joining queue details

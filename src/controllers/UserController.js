@@ -33,7 +33,7 @@ const register = async (req, res) => {
     try {
         let response = await user.save();
         if (response) {
-            return res.status(201).send({ message: 'New User registered' });
+            return res.json({ message: 'New User registered' });
         } else {
             return res.status(500).send({ message: 'Internal server error' });
         }
