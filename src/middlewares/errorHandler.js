@@ -1,3 +1,5 @@
+//referenced the following code snippet from https://betterprogramming.pub/build-an-authentication-api-with-node-express-and-mongodb-112b448c21f2
+
 function errorHandler(err, req, res, next) {
     if (typeof (err) === 'string') {
         // custom application error

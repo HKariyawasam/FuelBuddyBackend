@@ -1,6 +1,8 @@
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 
+//referenced the following code snippetfrom https://betterprogramming.pub/build-an-authentication-api-with-node-express-and-mongodb-112b448c21f2
+
 // get password vars from .env file
 dotenv.config();
 
