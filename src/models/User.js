@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+/**
+ * Model to be used as the schema for users 
+ * 
+ */
+
 const UserSchema = new Schema({
     name: {type: String,required: true},
     phone: {type: String,required: true, maxLength:10},

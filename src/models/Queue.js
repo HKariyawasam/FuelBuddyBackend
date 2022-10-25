@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
+/**
+ * Model to be used as the schema for Queue of a specific station
+ * 
+ */
 const QueueSchema = new Schema({
 
     stationId:{type: String,required: true},

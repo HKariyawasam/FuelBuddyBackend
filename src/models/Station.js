@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-
+/**
+ * Model to be used as the schema for Station
+ * 
+ */
 const StationSchema = new Schema({
 
     id:{type: String,required: true},
