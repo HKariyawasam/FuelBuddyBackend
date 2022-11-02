@@ -161,7 +161,7 @@ const searchStations = async (req, res) =>{
     let val =req.params.name;
 
      Station.find({name :{$regex: ".*" + val + ".*", $options:'i'}}).then((stations) =>{
-        return res.status(200).send(stations);
+        return res.status(200).send({data: stations});
  
      }).catch((err)=>{
          console.log(err);
